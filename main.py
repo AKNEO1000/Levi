@@ -3,7 +3,7 @@ import pyttsx3
 import datetime
 import webbrowser
 import wikipedia
-
+import pyaudio
 
 # Initialize the recognizer and the TTS engine
 recognizer = sr.Recognizer()
@@ -11,36 +11,46 @@ engine = pyttsx3.init()
 
 # Function to make the assistant speak
 def speak(audio):
-    	
-	engine = pyttsx3.init()
-	voices = engine.getProperty('voices')
-	engine.setProperty('voice', voices[1].id) # 0 = male, 1 = female
-	engine.say(audio) 
-	engine.runAndWait()
-
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[1].id)  # 0 = male, 1 = female
+    engine.say(audio)
+    engine.runAndWait()
 
 # Function to recognize speech
 def recognize_speech():
     with sr.Microphone() as source:
         print("Listening...")
-        recognizer.adjust_for_ambient_noise(source)
+
+        # Adjusting for ambient noise with a longer duration (to give time for ambient noise adjustment)
+        recognizer.adjust_for_ambient_noise(source, duration=1)
+        print("Ambient noise adjustment complete.")
+        
         try:
-            audio = recognizer.listen(source, timeout=5)
+            # Listen for audio input with a longer timeout (giving the user more time to speak)
+            audio = recognizer.listen(source, timeout=10)
             print("Recognizing...")
             command = recognizer.recognize_google(audio)
             print(f"You said: {command}")
             return command.lower()
         except sr.UnknownValueError:
+            print("Speech not recognized.")
             speak("Sorry, I didn't catch that. Could you repeat?")
         except sr.RequestError:
+            print("Error with speech recognition service.")
             speak("There seems to be an issue with the speech recognition service.")
         except sr.WaitTimeoutError:
+            print("Wait Timeout. No speech detected.")
             speak("You didn't say anything.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            speak("An unexpected error occurred. Please try again.")
         return None
 
 # Main function for the assistant
 def ai_assistant():
     speak("Hello! My name is Levi. How can I assist you today?")
+    
     while True:
         command = recognize_speech()
         if command:
@@ -99,4 +109,9 @@ def search_wikipedia(command):
 
 # Run the assistant
 if __name__ == "__main__":
-    ai_assistant()
+    # Check if the microphone is available
+    if sr.Microphone.list_microphone_names():
+        print("Microphone is available!")
+        ai_assistant()
+    else:
+        print("No microphone detected.")
