@@ -1,0 +1,9 @@
+# IMPORTANT:
+
+basic layout:
+ 
+# speech function, 
+# speech recognition
+# main features
+# main function of AI assistant.
+# __init__
