@@ -6,4 +6,6 @@ you need to have python3 installed as well as these libraries:
 speech_recognition,
 pyttsx3,
 wikipedia,
-pyaudio
+pyaudio,
+webbrowser,
+datetime
