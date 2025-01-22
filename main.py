@@ -4,14 +4,18 @@ import datetime
 import webbrowser
 import wikipedia
 import pyaudio
-
+import random
 # Initialize the recognizer and the TTS engine
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
 
 # List to store tasks
 tasks = []
-
+# List to store jokes:
+jokes = ["why was the broom late for work? It over-swept.", 
+         "why did the frog take the bus to work? because it's car got toad.", 
+         "What kind of bugs tell the time? A clock roach.",
+         "Why didn't scientists trust the atoms? because they made everything up."]
 # Function to make the assistant speak
 def speak(audio):
     engine = pyttsx3.init()
@@ -60,6 +64,8 @@ def ai_assistant():
             if "time" in command:
                 current_time = datetime.datetime.now().strftime("%I:%M %p")
                 speak(f"The current time is {current_time}")
+            elif "joke" in command:
+                tell_jokes()
             elif "are" in command:
                 who()
             elif "created" in command:
@@ -86,6 +92,10 @@ def ai_assistant():
 def who():
     speak('I am Levi, your personal desktop assistant.')
 
+# Function for telling jokes:
+def tell_jokes():
+    joke = random.choice(jokes)
+    speak(joke)
 #Function for creators:
 def creator():
     speak('I was created by my masters, Arsh Kumar and Avi Kapoor.')
