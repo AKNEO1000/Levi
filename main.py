@@ -60,6 +60,10 @@ def ai_assistant():
             if "time" in command:
                 current_time = datetime.datetime.now().strftime("%I:%M %p")
                 speak(f"The current time is {current_time}")
+            elif "are" in command:
+                who()
+            elif "created" in command:
+                creator()
             elif "open" in command or "visit" in command:
                 open_website(command)
             elif "wikipedia" in command:
@@ -77,6 +81,14 @@ def ai_assistant():
                 speak("I'm not sure how to help with that. Please try again.")
         else:
             speak("Please say something.")
+
+# Function for whoami:
+def who():
+    speak('I am Levi, your personal desktop assistant.')
+
+#Function for creators:
+def creator():
+    speak('I was created by my masters, Arsh Kumar and Avi Kapoor.')
 
 # Function to add a task to the to-do list
 def add_task():
