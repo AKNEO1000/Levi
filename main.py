@@ -9,6 +9,9 @@ import pyaudio
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
 
+# List to store tasks
+tasks = []
+
 # Function to make the assistant speak
 def speak(audio):
     engine = pyttsx3.init()
@@ -61,13 +64,52 @@ def ai_assistant():
                 open_website(command)
             elif "wikipedia" in command:
                 search_wikipedia(command)
-            elif "exit" in command or "quit" in command:
+            elif "add task" in command:
+                add_task()
+            elif "view tasks" in command:
+                view_tasks()
+            elif "remove task" in command:
+                remove_task()
+            elif "exit" in command or "quit" in command or "bye" in command:
                 speak("Goodbye! Have a great day!")
                 break
             else:
                 speak("I'm not sure how to help with that. Please try again.")
         else:
             speak("Please say something.")
+
+# Function to add a task to the to-do list
+def add_task():
+    speak("What task would you like to add to your to-do list?")
+    task = recognize_speech()
+    if task:
+        tasks.append(task)
+        speak(f"Task added: {task}")
+    else:
+        speak("I didn't catch that. Please try again.")
+
+# Function to view all tasks in the to-do list
+def view_tasks():
+    if tasks:
+        speak("Here are your tasks:")
+        for index, task in enumerate(tasks, start=1):
+            speak(f"{index}. {task}")
+    else:
+        speak("Your to-do list is empty.")
+
+# Function to remove a task from the to-do list
+def remove_task():
+    speak("Which task number would you like to remove?")
+    task_number = recognize_speech()
+    try:
+        task_number = int(task_number)
+        if 1 <= task_number <= len(tasks):
+            removed_task = tasks.pop(task_number - 1)
+            speak(f"Task removed: {removed_task}")
+        else:
+            speak("That's not a valid task number.")
+    except ValueError:
+        speak("Please say a valid number.")
 
 # Function to open a website
 def open_website(command):
