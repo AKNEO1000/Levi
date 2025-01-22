@@ -15,7 +15,9 @@ tasks = []
 jokes = ["why was the broom late for work? It over-swept.", 
          "why did the frog take the bus to work? because it's car got toad.", 
          "What kind of bugs tell the time? A clock roach.",
-         "Why didn't scientists trust the atoms? because they made everything up."]
+         "Why didn't scientists trust the atoms? because they made everything up.",
+         "why did math look sad? its because it had too many problems.",
+         "Why don't skeletons fight eachother? because they don't have the guts."]
 # Function to make the assistant speak
 def speak(audio):
     engine = pyttsx3.init()
@@ -141,6 +143,11 @@ def open_website(command):
         "github": "https://www.github.com",
         "facebook": "https://www.facebook.com",
         "twitter": "https://www.twitter.com",
+        'discord' : 'https://discord.com',
+        'instagram' : 'https://instagram.com',
+        'wikipedia' : 'https://wikipedia.com',
+        'reddit' : 'https://reddit.com',
+        'whatsapp' : 'https://web.whatsapp.com'
     }
     found = False
     for keyword, url in websites.items():
