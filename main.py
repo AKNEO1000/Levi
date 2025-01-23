@@ -55,6 +55,37 @@ def recognize_speech():
             print(f"An error occurred: {e}")
             speak("An unexpected error occurred. Please try again.")
         return None
+#caclulator function:
+def calculator():
+    speak("Please say the first number")
+    num1 = recognize_speech()
+    speak("Please say the operation: add, subtract, multiply, or divide")
+    operation = recognize_speech()
+    speak("Please say the second number")
+    num2 = recognize_speech()
+
+    try:
+        num1 = float(num1)
+        num2 = float(num2)
+        if operation == "add":
+            result = num1 + num2
+        elif operation == "subtract":
+            result = num1 - num2
+        elif operation == "multiply":
+            result = num1 * num2
+        elif operation == "divide":
+            if num2 != 0:
+                result = num1 / num2
+            else:
+                speak("Cannot divide by zero")
+                return
+        else:
+            speak("Invalid operation")
+            return
+
+        speak(f"The result is {result}")
+    except ValueError:
+        speak("Invalid number input. Please try again.")
 
 # Main function for the assistant
 def ai_assistant():
@@ -66,6 +97,8 @@ def ai_assistant():
             if "time" in command:
                 current_time = datetime.datetime.now().strftime("%I:%M %p")
                 speak(f"The current time is {current_time}")
+            elif "calculator" in command:
+                calculator()
             elif "joke" in command:
                 tell_jokes()
             elif "are" in command:
@@ -89,6 +122,7 @@ def ai_assistant():
                 speak("I'm not sure how to help with that. Please try again.")
         else:
             speak("Please say something.")
+        
 
 # Function for whoami:
 def who():
