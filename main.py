@@ -93,11 +93,11 @@ def ai_assistant():
 # Function for whoami:
 def who():
     speak('I am Levi, your personal desktop assistant.')
-
-# Function for telling jokes:
+    
+# Function for jokes:
 def tell_jokes():
     joke = random.choice(jokes)
-    speak(joke)
+    print(joke)
 #Function for creators:
 def creator():
     speak('I was created by my masters, Arsh Kumar and Avi Kapoor.')
